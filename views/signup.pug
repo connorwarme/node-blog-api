@@ -1,0 +1,33 @@
+extends layout 
+
+block content
+  div.sign-up-container
+    h1= title 
+
+    form(method='POST' action='') 
+      div.form-group 
+        label(for='first_name') First Name
+        input(type='text' name='first_name' aria-live='polite' required='true')
+      div.form-group 
+        label(for='family_name') Family Name
+        input(type='text' name='first_name' aria-live='polite' required='true')
+      div.form-group 
+        label(for='email') Email
+        input(type='text' name='email' aria-live='polite' required='true')
+      div.form-group 
+        label(for='password') Password
+        input(type='password' name='password' aria-live='polite' required='true')
+      div.form-group 
+        label(for='confirm_password') Confirm Password
+        input(type='password' name='confirm_password' aria-live='polite' required='true')
+      button.submit-btn Sign Up
+
+
+    hr
+    if errors 
+      ul 
+        for error in errors 
+          li!= error.msg
+    if error 
+      ul 
+        li!= error.message
