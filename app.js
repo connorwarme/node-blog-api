@@ -6,6 +6,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose')
 const session = require('express-session')
 require('dotenv').config()
+require('./passport')
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
