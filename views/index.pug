@@ -3,3 +3,9 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  if user 
+    p Welcome back #{user.name} 
+  
+  else 
+    a(href='/user/login') Login

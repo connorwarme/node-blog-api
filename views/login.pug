@@ -1,0 +1,17 @@
+extends layout 
+
+block content 
+  h1= title 
+
+  if messages 
+    each message in messages 
+      p= message
+
+  form(method='POST' action='') 
+    div.form-group 
+      label(for='email') Email 
+      input(type='text' name='email' aria-live='polite' required='true')
+    div.form-group 
+      label(for='password') Password 
+      input(type='password' name='password' aria-live='polite' required='true') 
+    button.submit-btn Login
