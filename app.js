@@ -9,7 +9,7 @@ require('dotenv').config()
 require('./passport')
 
 const indexRouter = require('./routes/index')
-const usersRouter = require('./routes/users')
+const usersRouter = require('./routes/user')
 const apiRouter = require('./routes/api')
 
 const app = express();
@@ -29,7 +29,7 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "mongo connection error"))
 
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
+app.use('/user', usersRouter)
 app.use('/api', apiRouter)
 
 // catch 404 and forward to error handler
