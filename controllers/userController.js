@@ -77,3 +77,13 @@ exports.create_post = [
     })
   })
 ]
+exports.login_get = asyncHandler(async(req, res, next) => {
+  res.render("login", { 
+    title: "Login",
+    messages: req.session.messages,
+  })
+})
+exports.login_post = passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "user/login",
+})
