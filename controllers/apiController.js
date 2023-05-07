@@ -9,6 +9,10 @@ exports.login_get = asyncHandler(async(req, res, next) => {
   const messages = req.session.messages
   res.json(messages)
 })
+// to do:
+// learn how to user JWT for the authentication for api
+// https://www.theodinproject.com/lessons/nodejs-api-security
+// pass the token back and forth in the header of the request obj to verify user
 // this is where i need to work with the jwt for authentication..?
 exports.login_post = passport.authenticate("local", {
   successRedirect: "/",
