@@ -20,23 +20,99 @@ exports.signup_get = function(req, res, next) {
     message: "signup GET"
   })
 }
-exports.signup_post = function(req, res, next) {
-  res.json({
-    message: "signup POST"
-  })
-}
+exports.signup_post = [
+  body("first_name", "Please add your first name.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(), 
+  body("family_name", "Please add your family name.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("email", "Please add your email address.")
+    .trim()
+    .isLength({ min: 1 })
+    .isEmail() 
+    .withMessage("Must be a valid email address!") 
+    .escape(),
+  body("password", "Password required.")
+    .trim() 
+    .isLength({ min: 6 }) 
+    .withMessage("Password must be at least 6 characters.")
+    .escape(),
+  body("confirm_password", "Passwords did not match.") 
+    .trim()
+    .custom((value, { req }) => {
+      return value === req.body.password
+    })
+    .escape(),
 
-exports.user_list = function(req, res, next) {
-  res.json({
-    message: "user list GET"
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req) 
+    const salt = 12
+    bcrypt.hash(req.body.password, salt, async(err, hashedPassword) => {
+      if (err) {
+        return next(err)
+      }
+      const user = new User({
+        first_name: req.body.first_name,
+        family_name: req.body.family_name,
+        email: req.body.email,
+        hash: hashedPassword,
+      })
+      if (!errors.isEmpty()) {
+        res.json({
+          title: "Sign Up",
+          user,
+          errors: errors.array(),
+        })
+        return
+      } else {
+        const emailExists = await User.findOne({ email: req.body.email }).exec()
+        if (emailExists) {
+          const error = new Error("Email address already associated with an account!")
+          error.status = 404 
+          console.log(error.message)
+          res.json({
+            title: "Sign Up",
+            user,
+            error: error,
+          })
+        } else {
+          await user.save()
+          res.json({
+            title: "User Profile",
+            user,
+          })
+        }
+      }
+    })
   })
-}
+]
 
-exports.user_detail = function(req, res, next) {
+
+exports.user_list = asyncHandler(async(req, res, next) => {
+  const users = await User.find({}).exec()
   res.json({
-    message: "user detail GET"
+    message: "user list GET",
+    users,
   })
-}
+})
+
+exports.user_detail = asyncHandler(async(req, res, next) => {
+  const detail = await User.findById(req.params.userid).exec()
+  if (detail === null) {
+    res.json({
+      message: "User detail GET",
+      error: "User not found in database",
+    })
+  } else {
+    res.json({
+      message: "user detail GET",
+      detail,
+    })
+  }
+})
 
 // blog related
 exports.blogs_list = function(req, res, next) {
