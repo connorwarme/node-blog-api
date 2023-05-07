@@ -6,6 +6,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose')
 const session = require('express-session')
 const passport = require('passport')
+const cors = require('cors')
 require('dotenv').config()
 require('./passport')
 
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: "lightning", resave: false, saveUninitialized: true }))
+app.use(cors())
 
 mongoose.connect(process.env.DB_STRING, {useUnifiedTopology: true, useNewUrlParser: true })
 const db = mongoose.connection;
