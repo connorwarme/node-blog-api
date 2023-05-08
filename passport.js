@@ -1,6 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
 const User = require('./models/user')
 
 passport.use(
@@ -40,3 +41,21 @@ passport.deserializeUser(async(id, done) => {
   }
 })
 
+exports.authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  if (token == null) {
+    return res.sendStatus(401).json({
+      message: "No token found."
+    })
+  }
+  jwt.verify(token, process.env.JWT_KEY, (err, user) => {
+    if (err) {
+      return res.status(403).json({
+        message: "You don't have proper clearance :/"
+      })
+    }
+    req.user = user
+    next()
+  })
+}

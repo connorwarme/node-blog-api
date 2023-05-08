@@ -28,8 +28,8 @@ exports.login_post = (req, res, next) => {
       })
     }
     if (user === false) {
-      return res.status(403).json({
-        message: "Access denied!!!"
+      return res.status(401).json({
+        message: "User not found."
       })
     } else {
       const token = jwt.sign({ user }, process.env.JWT_KEY)

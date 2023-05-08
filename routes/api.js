@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const api_controller = require("../controllers/apiController")
+const passport = require("../passport")
 
 /* GET api home */
 router.get('/', function(req, res, next) {
@@ -22,7 +23,7 @@ router.get('/user/:userid', api_controller.user_detail)
 // blog related
 router.get('/blogs', api_controller.blogs_list)
 
-router.get('/blog/create', api_controller.blog_create_get)
+router.get('/blog/create', passport.authenticateToken, api_controller.blog_create_get)
 router.post('/blog/create', api_controller.blog_create_post)
 
 router.get('blog/:blogid', api_controller.blog_detail)
