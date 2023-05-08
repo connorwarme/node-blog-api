@@ -6,6 +6,11 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 require("dotenv").config() 
 
+const fakeuser = {
+  name: "con",
+  package: "dudeage got nada"
+}
+
 exports.login_get = asyncHandler(async(req, res, next) => {
   const messages = req.session.messages
   res.json(messages)
@@ -15,23 +20,24 @@ exports.login_get = asyncHandler(async(req, res, next) => {
 // https://www.theodinproject.com/lessons/nodejs-api-security
 // pass the token back and forth in the header of the request obj to verify user
 // this is where i need to work with the jwt for authentication..?
-exports.login_post = function (req, res, next) {
+exports.login_post = (req, res, next) => {
   passport.authenticate("local", { session: false }, (err, user, info) => {
-    if (err || !user) {
+    if (err) {
       return res.status(400).json({
-        message: 'Something went wrong.. :/',
-        user,
+        message: "Something went south.. :/"
       })
     }
-    req.login(user, { session: false }, (err) => {
-      if (err) {
-        res.send(err)
-      }
-      const token = jwt.sign(user, process.env.JWT_KEY)
+    if (user === false) {
+      return res.status(403).json({
+        message: "Access denied!!!"
+      })
+    } else {
+      const token = jwt.sign({ user }, process.env.JWT_KEY)
       return res.json({ user, token })
-    })
-  })(req, res)
+    }
+  })(req, res, next)
 }
+
 exports.signup_get = function(req, res, next) {
   res.json({
     message: "signup GET"
