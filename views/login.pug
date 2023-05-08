@@ -7,7 +7,7 @@ block content
     each message in messages 
       p= message
 
-  form(method='POST' action='') 
+  form(method='POST' action='/api/login') 
     div.form-group 
       label(for='email') Email 
       input(type='text' name='email' aria-live='polite' required='true')
