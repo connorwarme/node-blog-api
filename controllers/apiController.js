@@ -6,11 +6,6 @@ const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 require("dotenv").config() 
 
-const fakeuser = {
-  name: "con",
-  package: "dudeage got nada"
-}
-
 exports.login_get = asyncHandler(async(req, res, next) => {
   const messages = req.session.messages
   res.json(messages)
