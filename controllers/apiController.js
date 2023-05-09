@@ -146,7 +146,8 @@ exports.blogs_list = function(req, res, next) {
 
 exports.blog_create_get = function(req, res, next) {
   res.json({
-    message: "create blog GET"
+    message: "create blog GET",
+    user: req.user
   })
 }
 exports.blog_create_post = function(req, res, next) {

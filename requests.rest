@@ -7,5 +7,14 @@ Content-Type: application/json
 
 {
   "email": "a@gmail.com",
-  "password": "cnman"
+  "password": "conman"
 }
+
+### 
+
+GET http://localhost:3000/api/blog/create
+
+###
+
+GET http://localhost:3000/api/blog/create
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjY0NTZmZGE0ZmIxNjgwNTI0ZDg0NzNkYSIsImZpcnN0X25hbWUiOiJDb24iLCJmYW1pbHlfbmFtZSI6Ik1hbiIsImVtYWlsIjoiYUBnbWFpbC5jb20iLCJhZG1pbiI6ZmFsc2UsImhhc2giOiIkMmEkMTIkWHFvdENWNGMwVGptc29mOG1WamZZLndnUUVIamRtdjhTT2RDT2c5NkszZHpOSldDRzdYZkMiLCJfX3YiOjB9LCJpYXQiOjE2ODM1ODkzMzd9.jfGCspdsKa_PnjxoHxs0cOGXwiq0yYc3FjAgyCyM8xQ
